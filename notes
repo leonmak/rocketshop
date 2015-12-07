@@ -4,5 +4,20 @@
 /public - static (img)
 
 Router.configure in lib/router.js
+<li><a href="{{pathFor 'homeAbout'}}">About</a></li>
+pathFor 'homeAbout' looks for url in router.js
 
-template 
+{{>yield}} looks at url in router.js and loads template
+
+add scripts with ui register helper
+// in client/main.js
+    UI.registerHelper("money", function(amount){
+        return accounting.formatMoney(amount);
+    })
+
+// in template/_partials/product_tile.html
+    {{money price}}
+
+// partial template names are in camelcase
+{{>productTile}}
+// but partial files names are in _, product_tile.html

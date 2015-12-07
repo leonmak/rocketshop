@@ -1,36 +1,25 @@
 <template name="homeIndex">
-  <div class="cover">
-    <div class="clearfix"></div>
-  </div>
-  <div class="container">
-    <div class="row">
-      <div class="col-md-12">
-        <div class="jumbotron">
-          <h1>Welcome to The Rocket Shop</h1>
-          <p class="lead">
-            To Mars With You!
-          </p>
-        </div>
-      </div>
-      <hr/>
+    <div class="cover">
+        <div class="clearfix"></div>
     </div>
-  </div>
-  <div class="container marketing">
-      <div class="row text-center">
-{{#each featured}}
-          <div class="col-md-3 col-sm-6 hero-feature">
-              <div class="thumbnail">
-                  <img src="/images/products/{{image}}" alt="">
-                  <div class="caption">
-                      <h3>{{name}}</h3>
-                      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                      <p>
-                          <a href="#" class="btn btn-primary">Buy Now!</a> <a href="#" class="btn btn-default">More Info</a>
-                      </p>
-                  </div>
-              </div>
-          </div>
-{{/each}}
-      </div>
-  </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="jumbotron">
+                    <h1>Welcome to The Rocket Shop</h1>
+                    <p class="lead">
+                        To Mars With You!
+                    </p>
+                </div>
+            </div>
+            <hr/>
+        </div>
+    </div>
+    <div class="container marketing">
+        <div class="row text-center">
+            {{#each featured}}
+            {{>productTile this}}
+            {{/each}}
+        </div>
+    </div>
 </template>
