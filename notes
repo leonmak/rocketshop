@@ -21,3 +21,89 @@ add scripts with ui register helper
 // partial template names are in camelcase
 {{>productTile}}
 // but partial files names are in _, product_tile.html
+
+added accounts-ui and accounts-password
+// check docs for config options top right it says client
+// so add client/config/accounts.js to add options
+    Accounts.ui.config({
+        passwordSignupFields: "USERNAME_AND_EMAIL"
+    });
+
+add roles package
+    log in and in console type Meteor.user(); to find user id used in mongo
+add admin role
+    meteor mongo
+    db.users.update({_id:"DtPhCvje2P32epFcc"}, {$set:{roles:["admin"]}})
+
+add data from mongodb
+    create collection in products.js
+        Products = new Mongo.Collection("products");
+    in index.html, need featured function
+        {{#each featured}}
+            {{>productTile this}}
+        {{/each}}
+    in index.js have featured helper, need Products.featured function
+        Template.homeIndex.helpers({
+            featured: function(){
+                return Products.featured();
+            }
+        });
+    in products.js
+        Products.featured = function(){
+            var featuredSkus = ["honeymoon-mars","johnny-liftoff","one-way-reentry"];
+            return Products.find({sku : {$in : featuredSkus}});
+        };
+
+Seed user data in seeds.js
+    if(Meteor.users.find().count()===0){
+        var id = Accounts.createUser({
+            username:"ADMIN",
+            email:'admin@admin.com',
+            password:'admin',
+            profile:{name:"big admin"},
+            roles:[]
+        });
+        Roles.addUsersToRoles(id,['admin']);}
+    // adds admin user everytime  do $meteor reset
+
+Set permission to crud products in products.js only if admin, with .allow
+    Products.allow({
+        update : function(userid, product){
+            return isAdmin();
+        },
+        insert : function(userid, product){
+            return isAdmin();
+        },
+        remove : function(userid, product){
+            return isAdmin();
+        }
+    });
+
+isAdmin is in globalname space
+    isAdmin = function(){
+        var loggedInUser = Meteor.user();
+        var result = false;
+        if(loggedInUser){
+            if(Roles.userIsInRole(loggedInUser,['admin'])){
+                result = true;
+            }
+        }
+        return result;
+    }
+
+for vendors
+    create mongo collection, in collections.js
+        in seeds.js create seed data and insert into db, if empty after reset
+    create routes for each vendor page, and template in vendors/show.html
+        Router.route("/vendors/:slug",{
+            name:"vendorsShow",
+            data:function(){
+                return Vendors.findOne({slug: this.params.slug});
+            }
+        });
+    create links from product to vendor, using #with,
+        {{#with vendor}}
+        <p><a href="{{pathFor 'vendorsShow'}}">{{name}}</a></p>
+        {{/with}}
+    in vendor/show.html create products
+        
