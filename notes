@@ -1,0 +1,4 @@
+/lib - anywhere
+/server - not browser
+/client - not server
+/public - static (img)
