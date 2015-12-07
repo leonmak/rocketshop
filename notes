@@ -2,3 +2,7 @@
 /server - not browser
 /client - not server
 /public - static (img)
+
+Router.configure in lib/router.js
+
+template 
