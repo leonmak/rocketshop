@@ -106,4 +106,9 @@ for vendors
         <p><a href="{{pathFor 'vendorsShow'}}">{{name}}</a></p>
         {{/with}}
     in vendor/show.html create products
-        
+
+added test
+
+added cart, show.html, show.js
+
+added config/notifications.js for notifications package
